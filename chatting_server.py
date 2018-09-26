@@ -12,7 +12,7 @@ s.listen(1)
 conn, addr = s.accept()
 print('Connected by', addr)
 
-def recv_all(sock, count):
+def recv_all(count):
     buf = b''
     while count:
         newbuf = conn.recv(count)
@@ -24,7 +24,7 @@ def recv_all(sock, count):
 
 def gettingVideo():
     while True:
-        data = conn.recv(921600)
+        data = recv_all(921600) #921600 = 480*640*3
         byte_to_numpy = numpy.frombuffer(data, numpy.uint8).reshape(480,640,3)
         cv2.imshow('hi',byte_to_numpy)
         if cv2.waitKey(1) == 27:
